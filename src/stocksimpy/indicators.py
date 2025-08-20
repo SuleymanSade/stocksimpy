@@ -55,6 +55,73 @@ def _validate_indicator_inputs(data_series: pd.Series, window: int, min_data_len
 
 # -----------------------------
 # DIFFERENT TYPES OF EMA
+
+def calculate_sma(data_series: pd.Series, window:int) -> pd.Series:
+    """Calculate the Simple Moving Average (SMA) of a given data series.
+    
+    The SMA is the average of a selected range of prices,
+    usually closing prices, by the number of periods in that range.
+
+    Parameters:
+    ----------
+        data_series: pandas.Series
+            The input data series for which to calculate the SMA.
+        window: int
+            The window size (number of periods) to use for the SMA calculation.
+
+    Returns:
+    ----------
+    pandas.Series
+        A pandas Series containing the SMA values. The initial 'window - 1' values will be NaN.
+    """
+    _validate_indicator_inputs(data_series=data_series, window=window)
+    
+    return data_series.rolling(window=window).mean()
+
+def calculate_wma(data_series: pd.Series, window: int) -> pd.Series:
+    """
+    Calculates the Weighted Moving Average (WMA) for a pandas Series.
+
+    The WMA assigns a greater weight to more recent data points within the window.
+    The weights increase linearly from 1 to the `window` size, with the most
+    recent data point receiving the highest weight.
+
+    Parameters
+    ----------
+    data_series : pd.Series
+        The input pandas Series for which to calculate the WMA.
+        Expected to contain numerical data.
+    window : int
+        The size of the moving window. This must be a positive integer.
+
+    Returns
+    -------
+    pd.Series
+        A pandas Series containing the Weighted Moving Average.
+        The first `(window - 1)` values will be `NaN`, as a full window
+        is required to calculate the WMA. The index of the returned Series
+        will match the input `data_series`.
+    """
+    _validate_indicator_inputs(data_series, window)
+    
+    weights = pd.Series(np.arange(1, window + 1))
+    weights_total = weights.sum()
+    
+    wma_series = pd.Series(index=data_series.index, dtype=float)
+    
+    for i in range(window - 1, len(data_series)):
+        current_window_data_values = data_series.iloc[i - window + 1 : i + 1].values
+
+        weighted_sum = (current_window_data_values * weights).sum()
+
+        wma = weighted_sum / weights_total
+        wma_series.iloc[i] = wma
+    
+    return wma_series
+    
+    
+    
+    
 def calculate_ema(data_series: pd.Series, window: int) -> pd.Series:
     """Calculates the Exponential Moving Average (EMA) of a data series.
 
@@ -218,27 +285,7 @@ def calculate_hma(data_series: pd.Series, window: int) -> pd.Series:
     hma = calculate_ema((2 * calculate_ema(data_series, window//2)) - calculate_ema(data_series, window), int(math.sqrt(window)))
     return hma
 
-def calculate_sma(data_series: pd.Series, window:int) -> pd.Series:
-    """Calculate the Simple Moving Average (SMA) of a given data series.
-    
-    The SMA is the average of a selected range of prices,
-    usually closing prices, by the number of periods in that range.
 
-    Parameters:
-    ----------
-        data_series: pandas.Series
-            The input data series for which to calculate the SMA.
-        window: int
-            The window size (number of periods) to use for the SMA calculation.
-
-    Returns:
-    ----------
-    pandas.Series
-        A pandas Series containing the SMA values. The initial 'window - 1' values will be NaN.
-    """
-    _validate_indicator_inputs(data_series=data_series, window=window)
-    
-    return data_series.rolling(window=window).mean()
 
 # ----------------
 

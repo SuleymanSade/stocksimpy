@@ -6,7 +6,7 @@ setup(
     version='0.1.0',
     description='A lightweight library for stock strategy testing.',
     author='Suleyman Sade',
-    install_requires=[],
+    install_requires=['pandas', 'numpy'],
     setup_requires=['pytest-runner'],
     test_requires=['pytest']
 )
