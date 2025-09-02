@@ -5,25 +5,71 @@ from datetime import date, timedelta
 
 class StockData:
     def __init__(self, df: pd.DataFrame):
-        self.df = self._clean(df)
-        self._validate(df)
+        self.df = df
+        # self._process_and_validate(df)
         
     def _clean(self, df):
+        
         df = df.copy()
+        
+        # We check if the df is already a DatetimeIndex which is seen when loaded from yfinance or formatted this way
+        # The below code handles the case when df isn't already DatetimeIndex
+        if not isinstance(df.index, pd.DatetimeIndex):
+            if 'Date' in df.columns:
+                df['Date'] = pd.to_datetime(df['Date'])
+                df.set_index('Date', inplace=True)
+            else:
+                raise ValueError("Input DataFrame must have a 'Date' column or a DatetimeIndex.")
+    
         df.columns = [col.strip().capitalize() for col in df.columns]
-        if 'Date' in df.columns:
-            df['Date'] = pd.to_datetime(df['Date'])
-            df.set_index('Date', inplace=True)
+        
         df.sort_index(inplace=True)
         return df
     
     def _validate(self, df:pd.DataFrame):
-        # TODO: figure this out
+        
+        if self.df.empty:
+            raise ValueError("DataFrame cannot be empty.")
+
+        if not isinstance(self.df.index, pd.DatetimeIndex):
+            raise TypeError("DataFrame index must be a DatetimeIndex.")
+            
+        # Check for sorted and unique index
+        if not self.df.index.is_monotonic_increasing:
+            raise ValueError("DataFrame index is not sorted monotonically.")
+        if self.df.index.has_duplicates:
+            raise ValueError("DataFrame index contains duplicate dates.")
+        
         # Checks if all the required columns are present in the data frame
         required_cols = ['Open', 'Close', 'Volume', 'High', 'Low']
         missing = [col for col in required_cols if col not in df.columns]
         if missing:
             raise ValueError(f"Missing required columns: {missing}")
+        
+        # Check all data numerical
+        for col in required_cols:
+            if not pd.api.types.is_numeric_dtype(self.df[col].dtype):
+                raise TypeError(f"Column '{col}' must be a numerical type. Found: {self.df[col].dtype}")
+            
+        if (self.df['Volume'] < 0).any():
+            raise ValueError("Volume data contains negative values.")
+        
+        # Basic logic checking (Low <= Open, Low <= Close, High >= Open, High >= Close)
+        if (self.df['Low'] > self.df['High']).any():
+            raise ValueError("OHLC data inconsistency: Low price is greater than High price.")
+        if (self.df['Open'] > self.df['High']).any() or (self.df['Open'] < self.df['Low']).any():
+            raise ValueError("OHLC data inconsistency: Open price is outside the High/Low range.")
+        if (self.df['Close'] > self.df['High']).any() or (self.df['Close'] < self.df['Low']).any():
+            raise ValueError("OHLC data inconsistency: Close price is outside the High/Low range.")
+        
+        
+
+        
+        
+    def _process_and_validate(self, df: pd.DataFrame) -> pd.DataFrame:
+        df_clean = self._clean(df)
+        self._validate(df_clean)
+        return df_clean
     
     # ------------------------------------------
     # LOAD DATA
@@ -86,7 +132,7 @@ class StockData:
     
     @classmethod
     def from_dict(cls, data:dict):
-        df = pd.DataFrame(dict)
+        df = pd.DataFrame(data)
         return cls(df)
     
     @classmethod
