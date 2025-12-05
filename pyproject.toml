@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stocksimpy"
+version = "0.1.0"
+description = "A beginner-friendly library for stock market data, backtesting, and strategies."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Suleyman Sade" }]
+requires-python = ">=3.10"
+
+dependencies = [
+    "pandas>=1.5",
+    "numpy>=1.21",
+    "yfinance>=0.2",
+    "matplotlib>=3.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "mypy",
+    "pytest",
+    "sphinx",
+    "sphinx-rtd-theme",
+    "pre-commit",
+]
+
+[project.urls]
+Homepage = "https://github.com/SuleymanSade/stocksimpy"
+Documentation = "https://stocksimpy.readthedocs.io/"
+Source = "https://github.com/SuleymanSade/stocksimpy"
+Issues = "https://github.com/SuleymanSade/stocksimpy/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]

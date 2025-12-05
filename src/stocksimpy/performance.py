@@ -1,1 +1,0 @@
-# src/stocksimpy/performance.py

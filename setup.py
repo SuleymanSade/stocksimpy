@@ -1,12 +1,3 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
-setup(
-    name='stocksimpy',
-    packages=find_packages(include=['stocksimpy']),
-    version='0.1.0',
-    description='A lightweight library for stock strategy testing.',
-    author='Suleyman Sade',
-    install_requires=['pandas', 'numpy'],
-    setup_requires=['pytest-runner'],
-    test_requires=['pytest']
-)
+setup()
