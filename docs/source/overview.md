@@ -80,6 +80,7 @@ viz.visualize_backtest().show()
 **What it does:** Loads, validates, and manages OHLCV (Open, High, Low, Close, Volume) stock price data.
 
 **Key features:**
+
 - Supports multiple data sources: yfinance, CSV, Excel, SQL, JSON, or pandas DataFrames
 - Validates data integrity (no missing values, duplicate dates, or negative volumes)
 - Handles multi-ticker data automatically
@@ -106,6 +107,7 @@ data = StockData(df)
 **What it does:** Executes a trading strategy on historical data and tracks the portfolio state (cash, holdings, trades, value over time).
 
 **Key features:**
+
 - Two execution modes: **fixed-size** (same shares per trade) or **dynamic-size** (variable shares)
 - Simulates realistic trading: applies transaction fees, tracks all trades
 - Multi-ticker support: automatically filters to a single symbol

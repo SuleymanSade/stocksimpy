@@ -4,17 +4,17 @@ API Reference
 .. Core Modules
 .. ------------
 
-.. automodule:: stocksimpy.core.stock_data
+.. automodule:: src.stocksimpy.core.stock_data
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: stocksimpy.core.portfolio
+.. automodule:: src.stocksimpy.core.portfolio
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: stocksimpy.core.backtester
+.. automodule:: src.stocksimpy.core.backtester
    :members:
    :undoc-members:
    :show-inheritance:
@@ -22,7 +22,7 @@ API Reference
 .. Addons
 .. ------
 
-.. automodule:: stocksimpy.addons.strategy
+.. automodule:: src.stocksimpy.addons.strategy
    :members:
    :undoc-members:
    :show-inheritance:
@@ -30,12 +30,12 @@ API Reference
 .. Utilities
 .. ---------
 
-.. automodule:: stocksimpy.utils.performance
+.. automodule:: src.stocksimpy.utils.performance
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. automodule:: stocksimpy.utils.visualize
+.. automodule:: src.stocksimpy.utils.visualize
    :members:
    :undoc-members:
    :show-inheritance:

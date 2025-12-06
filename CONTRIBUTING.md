@@ -11,7 +11,7 @@ Please follow the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) in all interactions.
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/stocksimpy.git
+    git clone https://github.com/suleymansade/stocksimpy.git
     cd stocksimpy
     ```
 
@@ -92,6 +92,7 @@ pytest
 
 ## 7. Documentation
 
+* You can find the latest stable docs [here](https://stocksimpy.readthedocs.io/en/latest/index.html)
 * Docs live under docs/source/.
 * Update docs for any public API you change.
 * Build docs locally:

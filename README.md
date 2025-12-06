@@ -16,7 +16,7 @@ stocksimpy lets you prototype trading ideas with minimal boilerplate. Everything
 
 ---
 
-## ⚡ [Get Started](docs/source/getting_started.md)
+## ⚡ [Quick Start](https://stocksimpy.readthedocs.io/en/latest/quick_start.html)
 
 ### 1. Install `stocksimpy` (and `yfinance` for convenient data input)
 
