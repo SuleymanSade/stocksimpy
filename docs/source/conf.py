@@ -8,7 +8,9 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../src"))
+# Add src to path for local development; on RTD the package will be installed
+if os.environ.get("READTHEDOCS") != "True":
+    sys.path.insert(0, os.path.abspath("../../src"))
 
 project = "stocksimpy"
 copyright = "2025, SuleymanSade"

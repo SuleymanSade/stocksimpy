@@ -1,7 +1,7 @@
 Metadata-Version: 2.4
 Name: stocksimpy
 Version: 0.1.0
-Summary: A simple, beginner-friendly library for stock market indicators, simulation, and backtesting.
+Summary: A beginner-friendly library for stock market data, backtesting, and strategies.
 Author: Suleyman Sade
 License: MIT License
         
@@ -29,20 +29,28 @@ Project-URL: Homepage, https://github.com/SuleymanSade/stocksimpy
 Project-URL: Documentation, https://stocksimpy.readthedocs.io/
 Project-URL: Source, https://github.com/SuleymanSade/stocksimpy
 Project-URL: Issues, https://github.com/SuleymanSade/stocksimpy/issues
-Requires-Python: >=3.8
+Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: pandas>=1.5
 Requires-Dist: numpy>=1.21
 Requires-Dist: yfinance>=0.2
 Requires-Dist: matplotlib>=3.5
+Provides-Extra: dev
+Requires-Dist: black; extra == "dev"
+Requires-Dist: isort; extra == "dev"
+Requires-Dist: mypy; extra == "dev"
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: sphinx; extra == "dev"
+Requires-Dist: sphinx-rtd-theme; extra == "dev"
+Requires-Dist: pre-commit; extra == "dev"
 Dynamic: license-file
 
 # stocksimpy
 
 #### Easy Python backtesting for stocks — fast and simple
 
-stocksimpy helps you test trading ideas quickly. No complicated setup, no confusing parameters — just simple Python code. Perfect for beginners and anyone who wants results fast.
+stocksimpy lets you prototype trading ideas with minimal boilerplate. Everything is explicit — load data, define rules, run a backtest. No configuration sprawl, no hidden state, and no magic methods.. Perfect for beginners and anyone who wants results fast.
 
 ---
 
@@ -56,7 +64,7 @@ stocksimpy helps you test trading ideas quickly. No complicated setup, no confus
 
 ---
 
-## ⚡ Get Started
+## ⚡ [Quick Start](https://stocksimpy.readthedocs.io/en/latest/quick_start.html)
 
 ### 1. Install `stocksimpy` (and `yfinance` for convenient data input)
 
@@ -77,23 +85,39 @@ from stocksimpy import StockData, Backtester, Visualize, Performance
 data = StockData().from_yfinance([your_stock_symbol], your_starting_date, your_end_date)
 ```
 
-### 4. Run Backtest
+### 4. Define Your Strategy
+
+```python
+def sma_crossover(prices):
+    short = prices["Close"].rolling(20).mean()
+    long = prices["Close"].rolling(50).mean()
+
+    # Buy when short crosses above long, sell when it crosses below
+    signal = (short > long).astype(int)
+    return signal
+```
+
+### 5. Run Backtest
 
 ```python
 # You can use your own strategy or one of the built-in ones for testing (e.g. Strategy.rsi_momentum_fixed())
-bt = Backtester(your_stock_symbol, data, your_strategy)
+bt = Backtester('AAPL', data, sma_crossover)
 
 # Depending on your strategy you may need to run bt.run_backtest_dynamic(), see more on the documentation
 bt.run_backtest_fixed()
 ```
 
-### 5. Evaluate the Results
+### 6. Evaluate the Results
 
 ```python
 # View performance metrics like max drawdown and sharpe ratio
 perf = Performance(bt)
 print(perf.generate_risk_report())
+```
 
+### 7. Visualize
+
+```python
 # Visualize the graph
 graph = Visualize(bt)
 graph.visualize_backtest().show() # You can use .savefig(...) instead of .show() to record the graph in disk
@@ -105,4 +129,4 @@ And thats it, you just ran your first backtest 🚀
 
 ## 🤝 Contributions
 
-Ideas, strategies, or improvements? We welcome all contributions!
+Ideas, strategies, or improvements? We welcome all contributions! Check out [CONTRIBUTING.md](CONTRIBUTING.md) for a more detailed information about contributing
