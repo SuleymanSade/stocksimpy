@@ -1,8 +1,8 @@
 API Reference
 =============
 
-Core Modules
-------------
+.. Core Modules
+.. ------------
 
 .. automodule:: stocksimpy.core.stock_data
    :members:
@@ -19,16 +19,16 @@ Core Modules
    :undoc-members:
    :show-inheritance:
 
-Addons
-------
+.. Addons
+.. ------
 
 .. automodule:: stocksimpy.addons.strategy
    :members:
    :undoc-members:
    :show-inheritance:
 
-Utilities
----------
+.. Utilities
+.. ---------
 
 .. automodule:: stocksimpy.utils.performance
    :members:
