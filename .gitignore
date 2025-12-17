@@ -8,3 +8,5 @@ testcode.py
 .eggs
 indicators.py
 test_indicators.py
+dist/
+*.egg-info/

@@ -4,6 +4,8 @@
 
 stocksimpy lets you prototype trading ideas with minimal boilerplate. Everything is explicit — load data, define rules, run a backtest. No configuration sprawl, no hidden state, and no magic methods.. Perfect for beginners and anyone who wants results fast.
 
+(Disclaimer: This is an early alpha, API might change in the future updates)
+
 ---
 
 ## 🎯 Quick Features
