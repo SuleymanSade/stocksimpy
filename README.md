@@ -43,12 +43,19 @@ data = StockData().from_yfinance([your_stock_symbol], your_starting_date, your_e
 
 ```python
 def sma_crossover(prices):
+
+    # Don't do any trades until long range
+    if(len(prices) < 50):
+        return "hold"
+    
     short = prices["Close"].rolling(20).mean()
     long = prices["Close"].rolling(50).mean()
 
     # Buy when short crosses above long, sell when it crosses below
-    signal = (short > long).astype(int)
-    return signal
+    if short > long:
+        return "buy"
+    else:
+        return "sell"
 ```
 
 ### 5. Run Backtest
@@ -84,3 +91,7 @@ And thats it, you just ran your first backtest 🚀
 ## 🤝 Contributions
 
 Ideas, strategies, or improvements? We welcome all contributions! Check out [CONTRIBUTING.md](CONTRIBUTING.md) for a more detailed information about contributing
+
+## 📃 Docs
+
+More in depth explanation on how to use this library can be found in [ReadTheDocs](https://stocksimpy.readthedocs.io/en/latest/).

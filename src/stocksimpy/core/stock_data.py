@@ -272,6 +272,7 @@ class StockData:
             if hasattr(df["Date"].dtype, "tz") and df["Date"].dtype.tz is not None:
                 df["Date"] = df["Date"].dt.tz_localize(None)
             df.set_index("Date", inplace=True)
+
         return cls(df)
 
     @classmethod
